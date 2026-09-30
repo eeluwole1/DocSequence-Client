@@ -1,0 +1,120 @@
+<app-card title="Allocation history">
+  <form
+    [formGroup]="filters"
+    (ngSubmit)="search()"
+    class="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5"
+  >
+    <div>
+      <label for="f-type" class="block text-sm font-medium text-slate-700">Type</label>
+      <select
+        id="f-type"
+        formControlName="documentTypeId"
+        class="mt-1 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 focus:outline-none"
+      >
+        <option [ngValue]="0">All types</option>
+        @for (type of types(); track type.documentTypeId) {
+          <option [ngValue]="type.documentTypeId">{{ type.prefix }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label for="f-identifier" class="block text-sm font-medium text-slate-700">Identifier</label>
+      <input
+        id="f-identifier"
+        formControlName="identifier"
+        placeholder="e.g. CXY-104"
+        class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 focus:outline-none"
+      />
+    </div>
+    <div>
+      <label for="f-engineer" class="block text-sm font-medium text-slate-700">Engineer</label>
+      <input
+        id="f-engineer"
+        formControlName="engineer"
+        class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 focus:outline-none"
+      />
+    </div>
+    <div>
+      <label for="f-from" class="block text-sm font-medium text-slate-700">From</label>
+      <input
+        id="f-from"
+        type="date"
+        formControlName="from"
+        class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 focus:outline-none"
+      />
+    </div>
+    <div>
+      <label for="f-to" class="block text-sm font-medium text-slate-700">To</label>
+      <input
+        id="f-to"
+        type="date"
+        formControlName="to"
+        class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 focus:outline-none"
+      />
+    </div>
+    <div class="flex gap-2 sm:col-span-2 lg:col-span-5">
+      <app-button type="submit" [loading]="loading()">Search</app-button>
+      <app-button variant="secondary" (click)="clear()" [disabled]="loading()">Clear</app-button>
+    </div>
+  </form>
+
+  @if (error()) {
+    <p role="alert" class="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+      {{ error() }}
+    </p>
+  } @else if (result(); as page) {
+    @if (page.items.length === 0) {
+      <p class="py-8 text-center text-sm text-slate-500">No allocations match these filters.</p>
+    } @else {
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-slate-200 text-slate-500">
+            <tr>
+              <th scope="col" class="py-2 pr-4 font-medium">Identifier</th>
+              <th scope="col" class="py-2 pr-4 font-medium">Document</th>
+              <th scope="col" class="py-2 pr-4 font-medium">Engineer</th>
+              <th scope="col" class="py-2 font-medium">Created</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            @for (row of page.items; track row.allocationId) {
+              <tr class="hover:bg-slate-50">
+                <td class="py-2 pr-4 font-mono font-semibold text-blue-700">
+                  {{ row.generatedIdentifier }}
+                </td>
+                <td class="py-2 pr-4 text-slate-900">{{ row.documentName }}</td>
+                <td class="py-2 pr-4 text-slate-700">{{ row.engineerName }}</td>
+                <td class="py-2 text-slate-700" [title]="row.createdAt + ' (UTC)'">
+                  {{ row.createdAt | date: 'medium' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4 flex items-center justify-between text-sm text-slate-600">
+        <span
+          >{{ page.totalCount }} result{{ page.totalCount === 1 ? '' : 's' }} · page
+          {{ page.page }} of {{ page.totalPages }}</span
+        >
+        <div class="flex gap-2">
+          <app-button
+            variant="secondary"
+            (click)="goTo(page.page - 1)"
+            [disabled]="loading() || page.page <= 1"
+            >Previous</app-button
+          >
+          <app-button
+            variant="secondary"
+            (click)="goTo(page.page + 1)"
+            [disabled]="loading() || page.page >= page.totalPages"
+            >Next</app-button
+          >
+        </div>
+      </div>
+    }
+  } @else {
+    <p class="py-8 text-center text-sm text-slate-500">Loading…</p>
+  }
+</app-card>
