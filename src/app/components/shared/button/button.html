@@ -1,0 +1,9 @@
+<button [type]="type()" [disabled]="disabled() || loading()" [class]="classes()">
+  @if (loading()) {
+    <span
+      class="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+      aria-hidden="true"
+    ></span>
+  }
+  <ng-content />
+</button>
