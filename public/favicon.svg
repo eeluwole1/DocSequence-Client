@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="page" x1="18" y1="12" x2="46" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e0e7ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+
+  <!-- document with folded corner -->
+  <path d="M18 12 H37 L46 21 V52 H18 Z" fill="url(#page)"/>
+  <path d="M37 12 V21 H46 Z" fill="#93c5fd"/>
+
+  <!-- sequence: numbered rows, the newest highlighted -->
+  <rect x="22" y="26" width="4" height="4" rx="1" fill="#93c5fd"/>
+  <rect x="28" y="26.5" width="13" height="3" rx="1.5" fill="#bfdbfe"/>
+  <rect x="22" y="33" width="4" height="4" rx="1" fill="#60a5fa"/>
+  <rect x="28" y="33.5" width="13" height="3" rx="1.5" fill="#93c5fd"/>
+  <rect x="22" y="40" width="4" height="4" rx="1" fill="#1d4ed8"/>
+  <rect x="28" y="40.5" width="13" height="3" rx="1.5" fill="#2563eb"/>
+</svg>
