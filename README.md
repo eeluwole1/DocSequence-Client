@@ -4,6 +4,8 @@
 
 The **Angular frontend** for **DocSequence, the Engineering Document Number Management System**. Engineers use it to generate unique, sequential document identifiers such as `CXY-10431` and to look up past allocations.
 
+**Live demo:** [purple-flower-04ffe8110.2.azurestaticapps.net](https://purple-flower-04ffe8110.2.azurestaticapps.net)
+
 > Angular 21 · TypeScript 5.9 · Tailwind CSS 4 · Signals · Vitest
 
 The API, the database design, the concurrency guarantees and the full documentation live in the companion repository **[DocSequence-Api](https://github.com/eeluwole1/DocSequence-Api)** (backend).
